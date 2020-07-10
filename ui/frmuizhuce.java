@@ -186,6 +186,7 @@ public class frmuizhuce extends JFrame implements ActionListener{
 			try {
 				Beanuser user =ttcpUtil.userManager.reg(userid, pwd, pwd2, name, telepohone, email, city, sex );
 				JOptionPane.showMessageDialog(null,"注册成功");
+				this.setVisible(false);
 			}catch (BaseException e1) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null, e1.getMessage(),"发生错误，输入格式不正确", JOptionPane.ERROR_MESSAGE);

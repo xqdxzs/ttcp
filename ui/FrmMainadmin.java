@@ -1,7 +1,6 @@
 package cn.edu.zucc.ttcp.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -31,19 +30,24 @@ import cn.edu.zucc.ttcp.model.Beanshangping_leibie;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
 import cn.edu.zucc.ttcp.model.Beanuser;
 import cn.edu.zucc.ttcp.util.BaseException;
-import javafx.application.Application;
 
 
-public class FrmMain extends JFrame implements ActionListener {
+//import cn.edu.zucc.personplan.PersonPlanUtil;
+//import cn.edu.zucc.personplan.model.BeanPlan;
+//import cn.edu.zucc.personplan.model.BeanStep;
+//import cn.edu.zucc.personplan.util.BaseException;
+
+
+public class FrmMainadmin extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menubar=new JMenuBar(); ;
-    private JMenu menu_plan=new JMenu("商品购买");
+    private JMenu menu_plan=new JMenu("商家管理");
     private JMenu menu_step=new JMenu("步骤管理");
     private JMenu menu_static=new JMenu("查询统计");
     private JMenu menu_more=new JMenu("更多");
     
-    private JMenuItem  menuItem_AddPlan=new JMenuItem("商品添加");
-    private JMenuItem  menuItem_DeletePlan=new JMenuItem("删除商品");
+    private JMenuItem  menuItem_AddPlan=new JMenuItem("新建商家");
+    private JMenuItem  menuItem_DeletePlan=new JMenuItem("删除计划");
     private JMenuItem  menuItem_AddStep=new JMenuItem("添加步骤");
     private JMenuItem  menuItem_DeleteStep=new JMenuItem("删除步骤");
     private JMenuItem  menuItem_startStep=new JMenuItem("开始步骤");
@@ -51,8 +55,8 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
     private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
     
-    private JMenuItem  menuItem_modifyPwd=new JMenuItem("密码修改");
-    private JMenuItem  menuItem_modifyvip=new JMenuItem("充值vip");
+    private JMenuItem  menuItem_modifyPwd=new JMenuItem("管理员密码修改");
+
     private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
     private JMenuItem  menuItem_static1=new JMenuItem("统计1");
 
@@ -159,36 +163,17 @@ public class FrmMain extends JFrame implements ActionListener {
 		tabshangpingModel.setDataVector(tblshangpingData,tblshangpingTitle);
 		this.dataTabshangping.validate();
 		this.dataTabshangping.repaint();
-	}
-	private void reloadgouwuche(){//购物车
-
-		try {
-			gouwuche=ttcpUtil.userGouwu.loadgouwuche();
-		} catch (BaseException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		tblgouwucheData =new Object[gouwuche.size()][Beangouwuche.tblStepTitle.length];
-		for(int i=0;i<gouwuche.size();i++){
-			for(int j=0;j<Beangouwuche.tblStepTitle.length;j++) {
-				tblgouwucheData[i][j]=gouwuche.get(i).getCell(j);				
-			
-			}		
-			
-		}
 		
-		tabgouwucheModel.setDataVector(tblgouwucheData,tblgouwucheTitle);
-		this.dataTablegouwuche.validate();
-		this.dataTablegouwuche.repaint();
 	}
-	public FrmMain(){
+	
+
+	public FrmMainadmin(){
 		
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
-		this.setTitle("ttcp外卖管理系统");
+		this.setTitle("管理员系统");
 //		dlgLogin=new FrmLogin(this,"登陆",true);
 //		dlgLogin.setVisible(true);
 	    //菜单
-		
 	    this.menu_plan.add(this.menuItem_AddPlan); this.menuItem_AddPlan.addActionListener(this);
 	    this.menu_plan.add(this.menuItem_DeletePlan); this.menuItem_DeletePlan.addActionListener(this);
 	    this.menu_step.add(this.menuItem_AddStep); this.menuItem_AddStep.addActionListener(this);
@@ -199,15 +184,12 @@ public class FrmMain extends JFrame implements ActionListener {
 	    this.menu_step.add(this.menuItem_moveDownStep); this.menuItem_moveDownStep.addActionListener(this);
 	    this.menu_static.add(this.menuItem_static1); this.menuItem_static1.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
-	    this.menu_more.add(this.menuItem_modifyvip); this.menuItem_modifyvip.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyF5); this.menuItem_modifyF5.addActionListener(this);
-
 	    menubar.add(menu_plan);
 	    menubar.add(menu_step);
 	    menubar.add(menu_static);
 	    menubar.add(menu_more);
 	    this.setJMenuBar(menubar);
-	    
 	    this.getContentPane().add(new JScrollPane(this.dataTableshangjia), BorderLayout.WEST);//商家
 	    this.reloadshangpinTable();
 	    this.dataTableshangjia.addMouseListener(new MouseAdapter (){
@@ -215,11 +197,11 @@ public class FrmMain extends JFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//System.out.print("2222");
-				int i=FrmMain.this.dataTableshangjia.getSelectedRow();
+				int i=FrmMainadmin.this.dataTableshangjia.getSelectedRow();
 				if(i<0) {
 					return;
 				}
-				FrmMain.this.reloadshangping_fenlei(i);
+				FrmMainadmin.this.reloadshangping_fenlei(i);
 			}
 	    	
 	    });
@@ -230,35 +212,19 @@ public class FrmMain extends JFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//System.out.print("1111");
-				int i=FrmMain.this.dataTableleibie.getSelectedRow();
+				int i=FrmMainadmin.this.dataTableleibie.getSelectedRow();
 				if(i<0) {
 					return;
 				}
-				FrmMain.this.reloadshangping_xiangxi(i);
+				FrmMainadmin.this.reloadshangping_xiangxi(i);
 			}
 	    	
 	    });
 	    this.getContentPane().add(new JScrollPane(this.dataTabshangping), BorderLayout.EAST);//商品详细
-	    this.reloadgouwuche();
-	    this.dataTabshangping.addMouseListener(new MouseAdapter (){//商品选择
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int i=FrmMain.this.dataTabshangping.getSelectedRow();
-				if(i<0) {
-					return;
-				}
-//				FrmMain.this.reloadPlanStepTabel(i);
-			}
-	    	
-	    });
-	    
-	    this.getContentPane().add(new JScrollPane(this.dataTablegouwuche), BorderLayout.SOUTH);//购物车
-	    
-	    
+	   // this.reloadgouwuche();
 	    //状态栏
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    JLabel label=new JLabel("您好!尊敬的:"+Beanuser.currentLoginUser.getName());//修改成   您好！+登陆用户名
+	    JLabel label=new JLabel("您好，管理员");//修改成   您好！+登陆用户名
 	    statusBar.add(label);
 	    this.getContentPane().add(statusBar,BorderLayout.NORTH);
 	    this.addWindowListener(new WindowAdapter(){   
@@ -268,47 +234,10 @@ public class FrmMain extends JFrame implements ActionListener {
         });
 	    this.setVisible(true);
 	}
-
-	protected void dataTableleibie(int i) {
-	// TODO Auto-generated method stub
-	
-}
-	protected void dataTablePlan2(int i) {
-		// TODO Auto-generated method stub
-		
-	}
-	private void reloadPlanTable() {
-		// TODO Auto-generated method stub
-		
-	}
-	private void reloadShoppingCarTable() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 if(e.getSource()==this.menuItem_modifyPwd){
-				FrmModifyPwd dlg=new FrmModifyPwd(this,"密码修改",true);
-				dlg.setVisible(true);
-			}
-		 if(e.getSource()==this.menuItem_modifyvip) {//vip
-			 	frmuservip vip = new frmuservip() ;
-			 	vip.setVisible(true);
-		 }
-		 if (e.getSource()==this.menuItem_modifyF5) {//刷新
-			 this.reloadshangpinTable();
-		      this.reloadshangpinTable();
-		      this.validate();
-		   this.repaint();
-		      this.setVisible(false);
-		   this.setVisible(true);
-		      
-		}
-		if(e.getSource()==this.menuItem_AddPlan){//购物车
-			Frmaddgouwuche addgouwu = new Frmaddgouwuche();
-			addgouwu.setVisible(true);
-			
-		}
+//		if(e.getSource()==this.menuItem_AddPlan){
+//			FrmAddPlan dlg=new FrmAddPlan(this,"添加计划",true);
+//			dlg.setVisible(true);
+//		}
 //		else if(e.getSource()==this.menuItem_DeletePlan){
 //			if(this.curPlan==null) {
 //				JOptionPane.showMessageDialog(null, "请选择计划", "错误",JOptionPane.ERROR_MESSAGE);
@@ -394,27 +323,32 @@ public class FrmMain extends JFrame implements ActionListener {
 //		else if(e.getSource()==this.menuItem_static1){
 //			
 //		}
-		
+//		else if(e.getSource()==this.menuItem_modifyPwd){
+//			FrmModifyPwd dlg=new FrmModifyPwd(this,"密码修改",true);
+//			dlg.setVisible(true);
+//		}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		 if(e.getSource()==this.menuItem_modifyPwd){
+				FrmModifyPwd dlg=new FrmModifyPwd(this,"密码修改",true);
+				dlg.setVisible(true);
+			}
+
+		 if (e.getSource()==this.menuItem_modifyF5) {//刷新
+			 this.reloadshangpinTable();
+		      this.reloadshangpinTable();
+		      this.validate();
+		   this.repaint();
+		      this.setVisible(false);
+		   this.setVisible(true);
+		      
+		}
+		if(e.getSource()==this.menuItem_AddPlan){//购物车
+			Frmadmin_add_shangjia add_shangjia = new Frmadmin_add_shangjia();
+			add_shangjia.setVisible(true);
+			
+		}
 	}
-	
-//	private void reloadPlanStepTabel(int planIdx){
-//		if(planIdx<0) return;
-//		curPlan=allPlan.get(planIdx);
-//		try {
-//			planSteps=PersonPlanUtil.stepManager.loadSteps(curPlan);
-//		} catch (BaseException e) {
-//			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//			return;
-//		}
-//		tblStepData =new Object[planSteps.size()][BeanStep.tblStepTitle.length];
-//		for(int i=0;i<planSteps.size();i++){
-//			for(int j=0;j<BeanStep.tblStepTitle.length;j++)
-//				tblStepData[i][j]=planSteps.get(i).getCell(j);
-//		}
-//		
-//		tabStepModel.setDataVector(tblStepData,tblStepTitle);
-//		this.dataTableStep.validate();
-//		this.dataTableStep.repaint();
-//	}
-	
-}
+	}
+

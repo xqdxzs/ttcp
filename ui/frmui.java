@@ -9,18 +9,25 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
+
+import cn.edu.zucc.ttcp.ttcpUtil;
+import cn.edu.zucc.ttcp.model.Beanadmin;
+import cn.edu.zucc.ttcp.model.Beanuser;
+import cn.edu.zucc.ttcp.util.BaseException;
+import jdk.internal.org.objectweb.asm.tree.TableSwitchInsnNode;
+import javax.swing.JPasswordField;
 public class frmui extends JFrame implements ActionListener{
 
 	private JPanel contentPane=new JPanel();
 //	private JTextField textField_2;
 	private final JTextField textField_1 = new JTextField();
-	private final JTextField textField_2 = new JTextField();
 
 	/**
 	 * Launch the application.
@@ -45,6 +52,7 @@ public class frmui extends JFrame implements ActionListener{
 	JButton button_2 = new JButton("注册");
 	JLabel label = new JLabel("用户名:");
 	JLabel lblTtcp = new JLabel("ttcp外卖");
+	private JPasswordField passwordField;
 	
 	
 	
@@ -58,7 +66,7 @@ public class frmui extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 
 		label_1.setToolTipText("密码不可为空，长度不可大于20");
-		label_1.setBounds(25, 90, 72, 18);
+		label_1.setBounds(25, 90, 52, 18);
 		contentPane.add(label_1);
 		
 
@@ -80,19 +88,16 @@ public class frmui extends JFrame implements ActionListener{
 		contentPane.add(label);
 		
 
-		textField_1.setBounds(90, 50, 244, 27);
+		textField_1.setBounds(90, 54, 244, 23);
 		contentPane.add(textField_1);
-		textField_2.setColumns(10);
-		
-		textField_2.setBounds(90, 86, 244, 27);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
 
 		lblTtcp.setFont(new Font("宋体", Font.PLAIN, 18));
 		lblTtcp.setBounds(163, 13, 101, 31);
 		contentPane.add(lblTtcp);
 		
-		contentPane.add(textField_2);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(90, 90, 244, 21);
+		contentPane.add(passwordField);
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==this.button_2) {
@@ -100,10 +105,34 @@ public class frmui extends JFrame implements ActionListener{
 			frame1.setVisible(true);
 		}
 		else if(e.getSource()==this.button){
-			System.out.print("111111111");
+			//System.out.print(passwordField.getText());
+			try {
+				Beanadmin.currentLoginUser =ttcpUtil.userManager.login(textField_1.getText(),passwordField.getText());
+				JOptionPane.showMessageDialog(null,"登录成功");
+			}catch (BaseException e1) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"发生错误，输入格式不正确", JOptionPane.ERROR_MESSAGE);
+				return ;
+			}
+			this.setVisible(false);
+
+			FrmMainadmin FM = new FrmMainadmin();
+			FM.setVisible(true);
+			
+			
 		}
 		else if(e.getSource()==this.button_1) {
-			System.out.print("2222222");
+			try {
+				Beanuser.currentLoginUser  =ttcpUtil.userManager.loginuser(textField_1.getText(),passwordField.getText());
+				JOptionPane.showMessageDialog(null,"登录成功");
+			}catch (BaseException e1) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"发生错误，输入格式不正确", JOptionPane.ERROR_MESSAGE);
+				return ;
+			}
+			this.setVisible(false);
+			FrmMain FM = new FrmMain();
+			FM.setVisible(true);
 		}
 	}
 }
