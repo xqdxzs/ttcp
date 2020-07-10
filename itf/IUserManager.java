@@ -1,5 +1,6 @@
 package cn.edu.zucc.ttcp.itf;
 
+import cn.edu.zucc.ttcp.model.Beanadmin;
 import cn.edu.zucc.ttcp.model.Beanuser;
 import cn.edu.zucc.ttcp.util.BaseException;
 
@@ -25,7 +26,7 @@ public interface IUserManager {
 	 * @return
 	 * @throws BaseException
 	 */
-	public Beanuser login(String userid,String pwd)throws BaseException;
+	public Beanadmin login(String admin_id,String pwd)throws BaseException;
 	/**
 	 * 修改密码
 	 * 如果没有成功修改，则抛出异常
@@ -34,5 +35,12 @@ public interface IUserManager {
 	 * @param newPwd  新密码
 	 * @param newPwd2 重复输入的新密码
 	 */
-	public void changePwd(Beanuser user, String oldPwd,String newPwd, String newPwd2)throws BaseException;
+	public Beanuser loginuser(String user_id,String pwd)throws BaseException;
+			
+			
+	public void changeadminPwd(Beanadmin admin, String oldPwd,String newPwd, String newPwd2)throws BaseException;
+	
+	public void changeuserPwd(Beanuser user, String oldPwd,String newPwd, String newPwd2)throws BaseException;
+	
+	public void vip(float money) ;
 }
