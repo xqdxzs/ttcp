@@ -1,6 +1,7 @@
 package cn.edu.zucc.ttcp.model;
 
 public class Beanshangping_leibie {
+	public static final String[] tblStepTitle= {"名称","类别序号","商品总数"};
 	private String category_name;
 	private int category_id;
 	private int shangjia_id;
@@ -29,4 +30,10 @@ public class Beanshangping_leibie {
 		this.shangping_number = shangping_number;
 	}
 	private int shangping_number;
+	public String getCell(int col){
+		if(col==0) return this.getCategory_name();
+		else if(col==1) return String.valueOf(this.category_id);
+		else if(col==2) return String.valueOf(this.shangping_number);
+		else return "";
+	}
 }

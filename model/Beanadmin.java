@@ -1,20 +1,21 @@
 package cn.edu.zucc.ttcp.model;
 
 public class Beanadmin {
-	private String ammin_id;
-	private String amin_name;
+	public static Beanadmin currentLoginUser=null;
+	private String admin_id;
+	private String admin_name;
 	private String password;
-	public String getAmmin_id() {
-		return ammin_id;
+	public String getAdmin_id() {
+		return admin_id;
 	}
-	public void setAmmin_id(String ammin_id) {
-		this.ammin_id = ammin_id;
+	public void setAdmin_id(String admin_id) {
+		this.admin_id = admin_id;
 	}
-	public String getAmin_name() {
-		return amin_name;
+	public String getAdmin_name() {
+		return admin_name;
 	}
-	public void setAmin_name(String amin_name) {
-		this.amin_name = amin_name;
+	public void setAdmin_name(String admin_name) {
+		this.admin_name = admin_name;
 	}
 	public String getPassword() {
 		return password;

@@ -3,6 +3,8 @@ package cn.edu.zucc.ttcp.model;
 import java.sql.Timestamp;
 
 public class Beanshangjia_xingxi {
+	public static final String[] tableTitles={"序号","名称","星级","人均消费"};
+	
 	private int shangjia_id;
 	private String shangjia_name;
 	private int shangjia_star;
@@ -38,5 +40,11 @@ public class Beanshangjia_xingxi {
 	public void setTotal_sales(int total_sales) {
 		this.total_sales = total_sales;
 	}
-	
+	 public String getCell(int col){
+		  if(col==0) return String.valueOf(this.shangjia_id);
+		  else if(col==1) return this.shangjia_name;
+		  else if(col==2) return String.valueOf(this.shangjia_star);
+		  else if(col==3) return String.valueOf(this.renjunxf);
+		  else return "";
+	 }
 }
