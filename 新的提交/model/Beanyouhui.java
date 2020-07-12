@@ -4,16 +4,28 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Beanyouhui {
+	public static final String[] tableTitles={"用户账号","优惠金额","持有数量","开始时间","到期时间"};
+	public String getCell(int col){
+		if(col==0) return String.valueOf(this.user_id);
+		else if(col==1) return String.valueOf(youhui);
+		else if(col==2) return String.valueOf(this.number);
+		else if(col==3) return String.valueOf(start_time);
+		else if(col==4) return String.valueOf(deadline);
+		else return "";
+	}
 	private int youhui_id;
 	private String user_id;
-	private int order_id;
-	private float discount_amount;
-	private float requests_number;
-	private Timestamp start_date;
-	private Timestamp end_date;
+	private int shangjia_id;
 	private float youhui;
 	private int number;
+	private Timestamp start_time;
 	private Timestamp deadline;
+	public Timestamp getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(Timestamp start_time) {
+		this.start_time = start_time;
+	}
 	public int getYouhui_id() {
 		return youhui_id;
 	}
@@ -26,35 +38,12 @@ public class Beanyouhui {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public int getOrder_id() {
-		return order_id;
+	
+	public int getShangjia_id() {
+		return shangjia_id;
 	}
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
-	}
-	public float getDiscount_amount() {
-		return discount_amount;
-	}
-	public void setDiscount_amount(float discount_amount) {
-		this.discount_amount = discount_amount;
-	}
-	public float getRequests_number() {
-		return requests_number;
-	}
-	public void setRequests_number(float requests_number) {
-		this.requests_number = requests_number;
-	}
-	public Timestamp getStart_date() {
-		return start_date;
-	}
-	public void setStart_date(Timestamp start_date) {
-		this.start_date = start_date;
-	}
-	public Timestamp getEnd_date() {
-		return end_date;
-	}
-	public void setEnd_date(Timestamp end_date) {
-		this.end_date = end_date;
+	public void setShangjia_id(int shangjia_id) {
+		this.shangjia_id = shangjia_id;
 	}
 	public float getYouhui() {
 		return youhui;

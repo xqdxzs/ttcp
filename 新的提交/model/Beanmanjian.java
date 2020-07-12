@@ -1,6 +1,15 @@
 package cn.edu.zucc.ttcp.model;
 
 public class Beanmanjian {
+	public static final String[] tableTitles={"满减编号","商家编号","要求满减金额","优惠金额","叠加优惠券"};
+	public String getCell(int col){
+		if(col==0) return String.valueOf(this.manjian_id);
+		else if(col==1) return String.valueOf(shangjia_id);
+		else if(col==2) return String.valueOf(manjian_amount);
+		else if(col==3) return String.valueOf(youhui_amount);
+		else if(col==4) return String.valueOf(diejia);
+		else return "";
+	}
 	private int manjian_id;
 	private int order_id;
 	private int shangjia_id;
