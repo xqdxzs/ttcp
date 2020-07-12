@@ -26,7 +26,10 @@ import javax.swing.table.DefaultTableModel;
 
 import cn.edu.zucc.ttcp.ttcpUtil;
 import cn.edu.zucc.ttcp.model.BeanAddress;
+import cn.edu.zucc.ttcp.model.Beanadmin;
 import cn.edu.zucc.ttcp.model.Beangouwuche;
+import cn.edu.zucc.ttcp.model.Beanmanjian;
+import cn.edu.zucc.ttcp.model.Beanrider;
 import cn.edu.zucc.ttcp.model.Beanshangjia_xingxi;
 import cn.edu.zucc.ttcp.model.Beanshangping_leibie;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
@@ -35,9 +38,9 @@ import cn.edu.zucc.ttcp.util.BaseException;
 import javafx.application.Application;
 
 
-public class FrmChakan_address extends JFrame implements ActionListener {
+public class FrmChakan_rider extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private JMenuBar menubar=new JMenuBar(); ;
+	private JMenuBar menubar=new JMenuBar(); 
     private JMenu menu_plan=new JMenu("商品购买");
     private JMenu menu_step=new JMenu("地址管理");
     private JMenu menu_static=new JMenu("查询统计");
@@ -76,56 +79,56 @@ public class FrmChakan_address extends JFrame implements ActionListener {
 	
 	private Beanshangjia_xingxi curshangjia=null;
 	
-	private Object tbladdressData[][];
-	DefaultTableModel tabaddressModel=new DefaultTableModel();
-	private JTable dataTableaddress=new JTable(tabaddressModel);
+	private Object tblriderData[][];
+	DefaultTableModel tabridernModel=new DefaultTableModel();
+	private JTable dataTablerider=new JTable(tabridernModel);
 
 	
 
-	private Object tbladdressTitle[]=BeanAddress.tableTitles;
+	private Object tblriderTitle[]=Beanrider.tableTitles;
 	
-	List<BeanAddress> alladdress=null;
+	List<Beanrider> alladdrider =null;
 	
-	List<Beangouwuche> gouwuche = null;
-	private Component dataTableStep;
 	
 
-	private void reloadshangpinTable(){//商家界面
+	private void reloadshangpinTable(){
 		try {
 			
-			alladdress = ttcpUtil.userManager.loadaddresss();
+			alladdrider = ttcpUtil.adminshangjiaguanli.loadrider();
 		} catch (BaseException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		tbladdressData =  new Object[alladdress.size()][BeanAddress.tableTitles.length];
-		for(int i=0;i<alladdress.size();i++){
-			for(int j=0;j<BeanAddress.tableTitles.length;j++) {
-				tbladdressData[i][j]=alladdress.get(i).getCell(j);
+		tblriderData =  new Object[alladdrider.size()][Beanrider.tableTitles.length];
+		
+		for(int i=0;i<alladdrider.size();i++){
+			for(int j=0;j<Beanrider.tableTitles.length;j++) {
+				tblriderData[i][j]=alladdrider.get(i).getCell(j);
+				
 			}
 		}
 		
-		tabaddressModel.setDataVector(tbladdressData,tbladdressTitle);
-		this.dataTableaddress.validate();
-		this.dataTableaddress.repaint();
+		tabridernModel.setDataVector(tblriderData,tblriderTitle);
+		this.dataTablerider.validate();
+		this.dataTablerider.repaint();
 	}
-	public FrmChakan_address(){
+	public FrmChakan_rider(){
 		
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 	//	this.setExtendedState(Frame.DISPOSE_ON_CLPSE);
-		this.setTitle("地址信息");
+		this.setTitle("骑手信息");
 //		dlgLogin=new FrmLogin(this,"登陆",true);
 //		dlgLogin.setVisible(true);
 	    //菜单
 		
 
 	    
-	    this.getContentPane().add(new JScrollPane(this.dataTableaddress), BorderLayout.CENTER);
+	    this.getContentPane().add(new JScrollPane(this.dataTablerider), BorderLayout.CENTER);
 	    this.reloadshangpinTable();
 	    
 	    //状态栏
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    JLabel label=new JLabel("您好!尊敬的用户:"+Beanuser.currentLoginUser.getName()+"您的地址如下：");
+	    JLabel label=new JLabel("您好!尊敬的管理员:"+Beanadmin.currentLoginUser.getAdmin_name()+"所有骑手信息如下：");
 	    statusBar.add(label);
 	    this.getContentPane().add(statusBar,BorderLayout.NORTH);
 //	    this.addWindowListener(new WindowAdapter(){   //结束整个系统

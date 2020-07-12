@@ -48,14 +48,16 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem  menuItem_Addaddress=new JMenuItem("添加配送地址");
     private JMenuItem  menuItem_Deleteaddress=new JMenuItem("删除配送地址");
     private JMenuItem  menuItem_startStep=new JMenuItem("查看地址");
-    private JMenuItem  menuItem_finishStep=new JMenuItem("结束步骤");
-    private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
-    private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
+//    private JMenuItem  menuItem_finishStep=new JMenuItem("结束步骤");
+//    private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
+//    private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
     
     private JMenuItem  menuItem_modifyPwd=new JMenuItem("密码修改");
     private JMenuItem  menuItem_modifyvip=new JMenuItem("充值vip");
     private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
-    private JMenuItem  menuItem_static1=new JMenuItem("统计1");
+    
+    private JMenuItem  menuItem_static1=new JMenuItem("领取优惠券");
+    private JMenuItem  menuItem_static2=new JMenuItem("查看优惠券");
 
 	private FrmLogin dlgLogin=null;
 	private JPanel statusBar = new JPanel();
@@ -197,10 +199,10 @@ public class FrmMain extends JFrame implements ActionListener {
 	    this.menu_step.add(this.menuItem_Addaddress); this.menuItem_Addaddress.addActionListener(this);
 	    this.menu_step.add(this.menuItem_Deleteaddress); this.menuItem_Deleteaddress.addActionListener(this);
 	    this.menu_step.add(this.menuItem_startStep); this.menuItem_startStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_finishStep); this.menuItem_finishStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_moveUpStep); this.menuItem_moveUpStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_moveDownStep); this.menuItem_moveDownStep.addActionListener(this);
+	    
 	    this.menu_static.add(this.menuItem_static1); this.menuItem_static1.addActionListener(this);
+	    this.menu_static.add(this.menuItem_static2); this.menuItem_static2.addActionListener(this);
+	    
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyvip); this.menuItem_modifyvip.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyF5); this.menuItem_modifyF5.addActionListener(this);
@@ -326,95 +328,17 @@ public class FrmMain extends JFrame implements ActionListener {
 			FrmChakan_address chakan_address =new FrmChakan_address();
 			chakan_address.setVisible(true);
 			}
-		if (e.getSource()==this.menuItem_Deleteaddress) {//
+		if (e.getSource()==this.menuItem_Deleteaddress) {///删地址
 			Frmdelete_address delete = new Frmdelete_address();
 			delete.setVisible(true);
 		}
-//		else if(e.getSource()==this.menuItem_DeletePlan){
-//			if(this.curPlan==null) {
-//				JOptionPane.showMessageDialog(null, "请选择计划", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.planManager.deletePlan(this.curPlan);
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_AddStep){
-//			FrmAddStep dlg=new FrmAddStep(this,"添加步骤",true);
-//			dlg.plan=curPlan;
-//			dlg.setVisible(true);
-//		}
-//		else if(e.getSource()==this.menuItem_DeleteStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.deleteStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_startStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.startStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_finishStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.finishStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_moveUpStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.moveUp(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_moveDownStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.moveDown(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_static1){
-//			
-//		}
+		if (e.getSource() == this.menuItem_static1) {//领取优惠券
+			
+		}
+		if (e.getSource() == this.menuItem_static2) {//查看优惠券
+			
+		}
+
 		
 	}
 	private void addshangping(int shangping_id, String shangping_name, float price, int loadnumber) {

@@ -34,6 +34,7 @@ public class FrmLogin extends JDialog implements ActionListener {
 	private JLabel labelPwd = new JLabel("密码：");
 	private JTextField edtUserId = new JTextField(20);
 	private JPasswordField edtPwd = new JPasswordField(20);
+	
 
 	public FrmLogin(Frame f, String s, boolean b) {
 		super(f, s, b);

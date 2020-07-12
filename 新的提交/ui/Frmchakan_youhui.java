@@ -25,38 +25,22 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import cn.edu.zucc.ttcp.ttcpUtil;
-import cn.edu.zucc.ttcp.model.BeanAddress;
+import cn.edu.zucc.ttcp.model.Beanadmin;
 import cn.edu.zucc.ttcp.model.Beangouwuche;
 import cn.edu.zucc.ttcp.model.Beanshangjia_xingxi;
 import cn.edu.zucc.ttcp.model.Beanshangping_leibie;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
 import cn.edu.zucc.ttcp.model.Beanuser;
+import cn.edu.zucc.ttcp.model.Beanyouhui;
+import cn.edu.zucc.ttcp.model.Beanyouhui1;
 import cn.edu.zucc.ttcp.util.BaseException;
 import javafx.application.Application;
 
 
-public class FrmChakan_address extends JFrame implements ActionListener {
+public class Frmchakan_youhui extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menubar=new JMenuBar(); ;
-    private JMenu menu_plan=new JMenu("商品购买");
-    private JMenu menu_step=new JMenu("地址管理");
-    private JMenu menu_static=new JMenu("查询统计");
-    private JMenu menu_more=new JMenu("更多");
     
-    private JMenuItem  menuItem_AddPlan=new JMenuItem("商品添加");
-    private JMenuItem  menuItem_DeletePlan=new JMenuItem("删除商品");//没做
-    private JMenuItem  menuItem_xiadan=new JMenuItem("下单");//没做
-    private JMenuItem  menuItem_Addaddress=new JMenuItem("添加配送地址");
-    private JMenuItem  menuItem_Deleteaddress=new JMenuItem("删除配送地址");
-    private JMenuItem  menuItem_startStep=new JMenuItem("查看地址");
-    private JMenuItem  menuItem_finishStep=new JMenuItem("结束步骤");
-    private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
-    private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
-    
-    private JMenuItem  menuItem_modifyPwd=new JMenuItem("密码修改");
-    private JMenuItem  menuItem_modifyvip=new JMenuItem("充值vip");
-    private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
-    private JMenuItem  menuItem_static1=new JMenuItem("统计1");
 
 	private FrmLogin dlgLogin=null;
 	private JPanel statusBar = new JPanel();
@@ -72,67 +56,118 @@ public class FrmChakan_address extends JFrame implements ActionListener {
 	DefaultTableModel tableibieModel=new DefaultTableModel();
 	private JTable dataTableleibie=new JTable(tableibieModel);
 	
+	private Object tblshangpingData[][];
+	DefaultTableModel tabshangpingModel=new DefaultTableModel();
+	private JTable dataTabshangping=new JTable(tabshangpingModel);
+	
+	private Beanyouhui1 curshangjia=null;
+	private Beanshangping_leibie curleibie=null;
+	private Beanshangping_xiangxi curshangping=null;
+	
+	private Object tblshangjiaData[][];
+	DefaultTableModel tabshangjiaModel=new DefaultTableModel();
+	private JTable dataTableshangjia=new JTable(tabshangjiaModel);
+	
+	private Object tblgouwucheData[][];
+	DefaultTableModel tabgouwucheModel=new DefaultTableModel();
+	private JTable dataTablegouwuche=new JTable(tabgouwucheModel);
+	
+	private Object tblleibieTitle[]=Beanyouhui.tableTitles;	
+	
+	private Object tblshangpingTitle[]=Beanshangping_xiangxi.tblStepTitle;	
 
+	private Object tblshangjiaTitle[]=Beanyouhui1.tableTitles;
 	
-	private Beanshangjia_xingxi curshangjia=null;
+	private Object tblgouwucheTitle[]=Beangouwuche.tblStepTitle;
 	
-	private Object tbladdressData[][];
-	DefaultTableModel tabaddressModel=new DefaultTableModel();
-	private JTable dataTableaddress=new JTable(tabaddressModel);
+	List<Beanyouhui1> allshangjia=null;
+	List<Beanyouhui> leibie=null;
 
-	
-
-	private Object tbladdressTitle[]=BeanAddress.tableTitles;
-	
-	List<BeanAddress> alladdress=null;
-	
-	List<Beangouwuche> gouwuche = null;
 	private Component dataTableStep;
 	
 
 	private void reloadshangpinTable(){//商家界面
 		try {
 			
-			alladdress = ttcpUtil.userManager.loadaddresss();
+			allshangjia = ttcpUtil.adminshangjiaguanli.loadyouhui1();
 		} catch (BaseException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		tbladdressData =  new Object[alladdress.size()][BeanAddress.tableTitles.length];
-		for(int i=0;i<alladdress.size();i++){
-			for(int j=0;j<BeanAddress.tableTitles.length;j++) {
-				tbladdressData[i][j]=alladdress.get(i).getCell(j);
+		tblshangjiaData =  new Object[allshangjia.size()][Beanyouhui1.tableTitles.length];
+		for(int i=0;i<allshangjia.size();i++){
+			for(int j=0;j<Beanyouhui1.tableTitles.length;j++) {
+				tblshangjiaData[i][j]=allshangjia.get(i).getCell(j);
 			}
 		}
 		
-		tabaddressModel.setDataVector(tbladdressData,tbladdressTitle);
-		this.dataTableaddress.validate();
-		this.dataTableaddress.repaint();
+		tabshangjiaModel.setDataVector(tblshangjiaData,tblshangjiaTitle);
+		this.dataTableshangjia.validate();
+		this.dataTableshangjia.repaint();
 	}
-	public FrmChakan_address(){
+	private void reloadshangping_fenlei(int planIdx){//商品类别
+		if(planIdx<0) return;
+		curshangjia=allshangjia.get(planIdx);
+		try {
+			leibie=ttcpUtil.adminshangjiaguanli.loadyouhui(curshangjia);
+		} catch (BaseException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		tblleibieData =new Object[leibie.size()][Beanyouhui.tableTitles.length];
+		for(int i=0;i<leibie.size();i++){
+			for(int j=0;j<Beanyouhui.tableTitles.length;j++)
+				tblleibieData[i][j]=leibie.get(i).getCell(j);
+			
+		}
+		
+		tableibieModel.setDataVector(tblleibieData,tblleibieTitle);
+		this.dataTableleibie.validate();
+		this.dataTableleibie.repaint();
+	}
+	
+	public Frmchakan_youhui(){
 		
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
-	//	this.setExtendedState(Frame.DISPOSE_ON_CLPSE);
-		this.setTitle("地址信息");
+		this.setTitle("优惠券信息情况");
 //		dlgLogin=new FrmLogin(this,"登陆",true);
 //		dlgLogin.setVisible(true);
 	    //菜单
 		
 
+
+	    this.setJMenuBar(menubar);
 	    
-	    this.getContentPane().add(new JScrollPane(this.dataTableaddress), BorderLayout.CENTER);
+	    this.getContentPane().add(new JScrollPane(this.dataTableshangjia), BorderLayout.WEST);//商家
 	    this.reloadshangpinTable();
+	    this.dataTableshangjia.addMouseListener(new MouseAdapter (){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//System.out.print("2222");
+				int i=Frmchakan_youhui.this.dataTableshangjia.getSelectedRow();
+				if(i<0) {
+					return;
+				}
+				Frmchakan_youhui.this.reloadshangping_fenlei(i);
+			}
+	    	
+	    });
+	    this.getContentPane().add(new JScrollPane(this.dataTableleibie), BorderLayout.CENTER);//商品分类
+	
+	   
+	    
 	    
 	    //状态栏
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    JLabel label=new JLabel("您好!尊敬的用户:"+Beanuser.currentLoginUser.getName()+"您的地址如下：");
-	    statusBar.add(label);
+	    JLabel label=new JLabel("您好!尊敬的管理员:"+Beanadmin.currentLoginUser.getAdmin_name()+"所有优惠券信息如下：");
+		    statusBar.add(label);
 	    this.getContentPane().add(statusBar,BorderLayout.NORTH);
-//	    this.addWindowListener(new WindowAdapter(){   //结束整个系统
-//	    	public void windowClosing(WindowEvent e){ 
-//	    		System.exit(0);
-//             }
-//        });
+	    this.addWindowListener(new WindowAdapter(){   
+	    	public void windowClosing(WindowEvent e){ 
+	    		System.exit(0);
+             }
+        });
 	    this.setVisible(true);
 	}
 
@@ -154,43 +189,7 @@ public class FrmChakan_address extends JFrame implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		 if(e.getSource()==this.menuItem_modifyPwd){
-//				FrmModifyPwd dlg=new FrmModifyPwd(this,"密码修改",true);
-//				dlg.setVisible(true);
-//			}
-//		 if(e.getSource()==this.menuItem_modifyvip) {//vip
-//			 	frmuservip vip = new frmuservip() ;
-//			 	vip.setVisible(true);
-//		 }
-//		 if (e.getSource()==this.menuItem_modifyF5) {//刷新
-//			 this.reloadshangpinTable();
-//		      this.reloadshangpinTable();
-//		      this.validate();
-//		   this.repaint();
-//		      this.setVisible(false);
-//		   this.setVisible(true);
-//		      
-//		}
-//		if(e.getSource()==this.menuItem_AddPlan){//购物车
-//			Frmaddgouwuche add = new Frmaddgouwuche();
-//			add.setShangping_id(curshangping.getShangping_id());
-//			add.setShangping_name(curshangping.getShangping_name());
-//			add.setPrice(curshangping.getPrice());
-//			add.setShangjia_id(curshangjia.getShangjia_id());
-//			add.setVisible(true);	
-//		}
-//		if(e.getSource()==this.menuItem_xiadan) {//结算
-//			
-//			
-//			
-//		}
-//		if(e.getSource()==this.menuItem_Addaddress) {//添加地址
-//			Frmadd_address addaddress = new Frmadd_address();
-//			addaddress.setVisible(true);
-//		}
-//		if(e.getSource()==this.menuItem_startStep) {//查看地址
-			
-		}
+		 
 //		else if(e.getSource()==this.menuItem_DeletePlan){
 //			if(this.curPlan==null) {
 //				JOptionPane.showMessageDialog(null, "请选择计划", "错误",JOptionPane.ERROR_MESSAGE);
@@ -277,7 +276,7 @@ public class FrmChakan_address extends JFrame implements ActionListener {
 //			
 //		}
 		
-//	}
+	}
 	private void addshangping(int shangping_id, String shangping_name, float price, int loadnumber) {
 		// TODO Auto-generated method stub
 		

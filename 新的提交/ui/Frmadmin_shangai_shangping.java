@@ -28,6 +28,7 @@ public class Frmadmin_shangai_shangping extends JFrame implements ActionListener
 	private JButton btnNewButton_2 = new JButton("退出");
 	private final JLabel lblTip = new JLabel("tip：直接删除只需要输入商家号后按删除键");
 	private int category_id;
+	private final JLabel lblNewLabel_1 = new JLabel("  tip2: 选择的类别号将将决定修改后的类别号");
 
 	
 	public int getCategory_id() {
@@ -55,22 +56,22 @@ public class Frmadmin_shangai_shangping extends JFrame implements ActionListener
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("商品名：");
-		lblNewLabel_3.setBounds(14, 140, 94, 18);
+		lblNewLabel_3.setBounds(14, 165, 94, 18);
 		contentPane.add(lblNewLabel_3);
 		
-		textField_1.setBounds(92, 137, 86, 24);
+		textField_1.setBounds(92, 162, 86, 24);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("价格：");
-		lblNewLabel_4.setBounds(192, 140, 98, 18);
+		lblNewLabel_4.setBounds(192, 165, 98, 18);
 		contentPane.add(lblNewLabel_4);
 		
 		btnNewButton.setBounds(24, 261, 108, 25);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(this);
 	
-		textField_2.setBounds(276, 137, 86, 24);
+		textField_2.setBounds(252, 162, 86, 24);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -92,6 +93,9 @@ public class Frmadmin_shangai_shangping extends JFrame implements ActionListener
 		lblTip.setBounds(24, 94, 299, 18);
 		
 		contentPane.add(lblTip);
+		lblNewLabel_1.setBounds(14, 125, 337, 18);
+		
+		contentPane.add(lblNewLabel_1);
 		btnNewButton_2.addActionListener(this);
 	}
 

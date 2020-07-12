@@ -45,8 +45,8 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menubar=new JMenuBar(); ;
     private JMenu menu_plan=new JMenu("商家管理");
-    private JMenu menu_step=new JMenu("步骤管理");   
-    private JMenu menu_static=new JMenu("查询统计");    
+    private JMenu menu_step=new JMenu("优惠管理");   
+    private JMenu menu_static=new JMenu("骑手管理");    
     private JMenu menu_more=new JMenu("更多");
     
     private JMenuItem  menuItem_AddPlan=new JMenuItem("新建商家");
@@ -56,14 +56,21 @@ public class FrmMainadmin extends JFrame implements ActionListener {
     private JMenuItem  menuItem_addshangping = new JMenuItem("新增商品");
     private JMenuItem  menuItem_shangaishangping = new JMenuItem("删改商品");
     
-    private JMenuItem  menuItem_AddStep=new JMenuItem("添加步骤");
-    private JMenuItem  menuItem_DeleteStep=new JMenuItem("删除步骤");
-    private JMenuItem  menuItem_startStep=new JMenuItem("开始步骤");
-    private JMenuItem  menuItem_finishStep=new JMenuItem("结束步骤");
-    private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
-    private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
+    private JMenuItem  menuItem_AddStep=new JMenuItem("添加满减方案");
+    private JMenuItem  menuItem_DeleteStep=new JMenuItem("删改满减方案");
+    private JMenuItem  menuItem_startStep=new JMenuItem("查看满减方案");
     
-    private JMenuItem  menuItem_static1=new JMenuItem("统计1");
+    private JMenuItem  menuItem_addyouhui=new JMenuItem("新增/删除优惠券");
+   // private JMenuItem  menuItem_deleteyouhui=new JMenuItem("删除优惠券");
+    private JMenuItem  menuItem_chakan_user_youhui=new JMenuItem("查看用户优惠券");
+    
+//    private JMenuItem  menuItem_finishStep=new JMenuItem("结束步骤");
+//    private JMenuItem  menuItem_moveUpStep=new JMenuItem("步骤上移");
+//    private JMenuItem  menuItem_moveDownStep=new JMenuItem("步骤下移");
+    
+    private JMenuItem  menuItem_static1=new JMenuItem("添加骑手");
+    private JMenuItem menuItem_static2 = new JMenuItem("删改骑手");
+    private JMenuItem menuItem_static3 = new JMenuItem("查看骑手信息");
     
     private JMenuItem  menuItem_modifyPwd=new JMenuItem("管理员密码修改");
     private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
@@ -193,10 +200,13 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 	    this.menu_step.add(this.menuItem_AddStep); this.menuItem_AddStep.addActionListener(this);
 	    this.menu_step.add(this.menuItem_DeleteStep); this.menuItem_DeleteStep.addActionListener(this);
 	    this.menu_step.add(this.menuItem_startStep); this.menuItem_startStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_finishStep); this.menuItem_finishStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_moveUpStep); this.menuItem_moveUpStep.addActionListener(this);
-	    this.menu_step.add(this.menuItem_moveDownStep); this.menuItem_moveDownStep.addActionListener(this);
+	    this.menu_step.add(this.menuItem_addyouhui); this.menuItem_addyouhui.addActionListener(this);
+	    this.menu_step.add(this.menuItem_chakan_user_youhui); this.menuItem_chakan_user_youhui.addActionListener(this);
+	    
 	    this.menu_static.add(this.menuItem_static1); this.menuItem_static1.addActionListener(this);
+	    this.menu_static.add(this.menuItem_static2); this.menuItem_static2.addActionListener(this);
+	    this.menu_static.add(this.menuItem_static3); this.menuItem_static3.addActionListener(this);
+	    
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyF5); this.menuItem_modifyF5.addActionListener(this);
 	    menubar.add(menu_plan);
@@ -248,100 +258,7 @@ public class FrmMainadmin extends JFrame implements ActionListener {
         });
 	    this.setVisible(true);
 	}
-//		if(e.getSource()==this.menuItem_AddPlan){
-//			FrmAddPlan dlg=new FrmAddPlan(this,"添加计划",true);
-//			dlg.setVisible(true);
-//		}
-//		else if(e.getSource()==this.menuItem_DeletePlan){
-//			if(this.curPlan==null) {
-//				JOptionPane.showMessageDialog(null, "请选择计划", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.planManager.deletePlan(this.curPlan);
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_AddStep){
-//			FrmAddStep dlg=new FrmAddStep(this,"添加步骤",true);
-//			dlg.plan=curPlan;
-//			dlg.setVisible(true);
-//		}
-//		else if(e.getSource()==this.menuItem_DeleteStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.deleteStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_startStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.startStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_finishStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.finishStep(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_moveUpStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.moveUp(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_moveDownStep){
-//			int i=FrmMain.this.dataTableStep.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null, "请选择步骤", "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			try {
-//				PersonPlanUtil.stepManager.moveDown(this.planSteps.get(i));
-//			} catch (BaseException e1) {
-//				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if(e.getSource()==this.menuItem_static1){
-//			
-//		}
-//		else if(e.getSource()==this.menuItem_modifyPwd){
-//			FrmModifyPwd dlg=new FrmModifyPwd(this,"密码修改",true);
-//			dlg.setVisible(true);
-//		}
-	@Override
+
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		 if(e.getSource()==this.menuItem_modifyPwd){
@@ -390,11 +307,42 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null,"请选择商品类型后再进行该操作！","错误",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-
-				
 			shangping.setCategory_id(curleibie.getCategory_id());
 			shangping.setVisible(true);
 		}
+		if (e.getSource() == this.menuItem_AddStep) {
+			Frmadmin_add_manjian add_manjian = new Frmadmin_add_manjian();
+			add_manjian.setVisible(true);
+			
+		}
+		if (e.getSource() == this.menuItem_DeleteStep) {
+			Frmadmin_shangai_manjian manjian = new Frmadmin_shangai_manjian();
+			manjian.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_startStep) {
+			Frmchakan_manjian list_manjian = new Frmchakan_manjian();
+			list_manjian.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_static1) {
+			Frmadd_rider add_rider = new Frmadd_rider();
+			add_rider.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_static2) {
+			Frmshangai_rider rider = new Frmshangai_rider();
+			rider.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_static3) {
+			FrmChakan_rider list_rider = new FrmChakan_rider();
+			list_rider.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_addyouhui) {
+			Frmadd_delete_youhui youhui = new Frmadd_delete_youhui();
+			youhui.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_chakan_user_youhui ) {
+			Frmchakan_youhui list_youhui = new Frmchakan_youhui();
+			list_youhui.setVisible(true);
+		}
 	}
-	}
+}
 
