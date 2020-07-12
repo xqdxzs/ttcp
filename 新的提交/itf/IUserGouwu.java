@@ -1,6 +1,8 @@
 package cn.edu.zucc.ttcp.itf;
 
+import cn.edu.zucc.ttcp.model.BeanAddress;
 import cn.edu.zucc.ttcp.model.Beangouwuche;
+import cn.edu.zucc.ttcp.model.Beanmanjian;
 import cn.edu.zucc.ttcp.model.Beanshangjia_xingxi;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
 import cn.edu.zucc.ttcp.model.Beanuser;
@@ -21,4 +23,6 @@ public interface IUserGouwu {
 	public  Beangouwuche addshangping(int shangping_id,String shangping_,float price,int number,int shangjia_id) throws BaseException ;
 	
 	public Beanshangping_xiangxi update_yuliang(int number) throws BaseException;
+	
+	
 }
