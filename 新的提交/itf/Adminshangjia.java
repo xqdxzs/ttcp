@@ -47,7 +47,7 @@ public interface  Adminshangjia {
 	
 	public List<Beanrider > loadrider( )throws BaseException;
 //
-	public  Beanyouhui1 addyouhui(int shangjia_id,float youhui )throws BaseException;
+	public  Beanyouhui1 addyouhui(int shangjia_id,float youhui,int requests_number ,int time_of_day)throws BaseException;
 	
 	public Beanyouhui1 deleteyouhui(int youhui_id) throws BaseException;
 	
