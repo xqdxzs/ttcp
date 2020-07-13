@@ -43,8 +43,8 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenu menu_more=new JMenu("更多");
     
     private JMenuItem  menuItem_AddPlan=new JMenuItem("商品添加");
-    private JMenuItem  menuItem_DeletePlan=new JMenuItem("删除商品");//没做
-    private JMenuItem  menuItem_xiadan=new JMenuItem("下单");//没做
+    private JMenuItem  menuItem_DeletePlan=new JMenuItem("删除商品");
+    private JMenuItem  menuItem_xiadan=new JMenuItem("结算");
     private JMenuItem  menuItem_Addaddress=new JMenuItem("添加配送地址");
     private JMenuItem  menuItem_Deleteaddress=new JMenuItem("删除配送地址");
     private JMenuItem  menuItem_startStep=new JMenuItem("查看地址");
@@ -206,11 +206,12 @@ public class FrmMain extends JFrame implements ActionListener {
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyvip); this.menuItem_modifyvip.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyF5); this.menuItem_modifyF5.addActionListener(this);
-
+	  
 	    menubar.add(menu_plan);
 	    menubar.add(menu_step);
 	    menubar.add(menu_static);
 	    menubar.add(menu_more);
+	
 	    this.setJMenuBar(menubar);
 	    
 	    this.getContentPane().add(new JScrollPane(this.dataTableshangjia), BorderLayout.WEST);//商家
@@ -316,8 +317,10 @@ public class FrmMain extends JFrame implements ActionListener {
 			add.setVisible(true);	
 		}
 		if(e.getSource()==this.menuItem_xiadan) {//结算
-			
-			
+			Frmshangping_jiesuan frame = new Frmshangping_jiesuan(gouwuche.get(0).getShangjia_id());			
+		//	frame.setShangjia_id(Integer.valueOf();
+			//System.out.print(frame.getShangjia_id());
+			frame.setVisible(true);
 			
 		}
 		if(e.getSource()==this.menuItem_Addaddress) {//添加地址
@@ -333,10 +336,12 @@ public class FrmMain extends JFrame implements ActionListener {
 			delete.setVisible(true);
 		}
 		if (e.getSource() == this.menuItem_static1) {//领取优惠券
-			
+			Frmuser_chakan_jidan list_jidan = new Frmuser_chakan_jidan();
+			list_jidan.setVisible(true);
 		}
 		if (e.getSource() == this.menuItem_static2) {//查看优惠券
-			
+			Frmchakan_user_youhui list_youhui = new Frmchakan_user_youhui();
+			list_youhui.setVisible(true);
 		}
 
 		

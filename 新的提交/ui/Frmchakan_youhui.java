@@ -162,12 +162,12 @@ public class Frmchakan_youhui extends JFrame implements ActionListener {
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 	    JLabel label=new JLabel("您好!尊敬的管理员:"+Beanadmin.currentLoginUser.getAdmin_name()+"所有优惠券信息如下：");
 		    statusBar.add(label);
-	    this.getContentPane().add(statusBar,BorderLayout.NORTH);
-	    this.addWindowListener(new WindowAdapter(){   
-	    	public void windowClosing(WindowEvent e){ 
-	    		System.exit(0);
-             }
-        });
+//	    this.getContentPane().add(statusBar,BorderLayout.NORTH);
+//	    this.addWindowListener(new WindowAdapter(){   
+//	    	public void windowClosing(WindowEvent e){ 
+//	    		System.exit(0);
+//             }
+//        });
 	    this.setVisible(true);
 	}
 

@@ -17,6 +17,7 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import org.hibernate.loader.plan.exec.query.internal.SelectStatementBuilder;
 
 import com.mysql.fabric.xmlrpc.base.Data;
 import com.sun.glass.events.WindowEvent;
@@ -27,40 +28,38 @@ import cn.edu.zucc.ttcp.ttcpUtil;
 import cn.edu.zucc.ttcp.model.Beanuser;
 import cn.edu.zucc.ttcp.util.DBUtil;
 import cn.edu.zucc.ttcp.util.DbException;
+import sun.security.timestamp.Timestamper;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 public class frmuservip extends JFrame implements ActionListener {
 
+	private static final Timestamp NullPointerException = null;
 	private JPanel contentPane;
-	private JTextField textField=new JTextField();
 	private JButton button = new JButton("确认充值");
 	private JButton button_1 = new JButton("我选择白嫖");
-	private final JLabel lblrday = new JLabel("1R/day");
+	private final JLabel lblrday = new JLabel("15R/month(获得4张vip券）");
 	private final JLabel lblNewLabel = new JLabel(this.xianshi());
+	private final JRadioButton radioButton = new JRadioButton("30天");
 
 
 	public frmuservip() {
 		
 	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setBounds(100, 100, 337, 254);
+		setBounds(100, 100, 352, 262);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("充值金额：");
+		JLabel label = new JLabel("充值时间:");
 		label.setBounds(14, 68, 82, 18);
 		contentPane.add(label);
-		
-		
-		textField.setBounds(119, 65, 175, 24);
-		contentPane.add(textField);
-		textField.setColumns(10);
 		
 		JLabel lblVip = new JLabel("vip到期时间：");
 		lblVip.setBounds(14, 109, 105, 18);
@@ -73,31 +72,43 @@ public class frmuservip extends JFrame implements ActionListener {
 		
 		button_1.setBounds(163, 156, 113, 27);
 		contentPane.add(button_1);
-		lblrday.setBounds(105, 23, 122, 24);
+		lblrday.setBounds(27, 27, 224, 24);
 		
 		contentPane.add(lblrday);
-		lblNewLabel.setBounds(129, 109, 165, 18);
+		lblNewLabel.setBounds(129, 109, 157, 18);
 		
 		contentPane.add(lblNewLabel);
+		radioButton.setBounds(106, 64, 59, 27);
+		
+		contentPane.add(radioButton);
 		button_1.addActionListener(this);
 	
 	}
+	Timestamp A = NullPointerException;
 	public String xianshi() {
 			String str = null;
 			if (Beanuser.currentLoginUser.getVip()==0) {
 				str = "你还不是vip";
+				A = new java.sql.Timestamp(System.currentTimeMillis());
 			}
 			else {
 				str=Beanuser.currentLoginUser.getVip_deadline();
+				A =Timestamp.valueOf(Beanuser.currentLoginUser.getVip_deadline());
 			}
 		return str;
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==this.button) {
-			int day=Integer.parseInt(textField.getText());
-			
-			Timestamp A =Timestamp.valueOf(Beanuser.currentLoginUser.getVip_deadline());
-			A=new Timestamp(A.getTime()+day*86400000);
+			int day=0;
+			if(radioButton.isSelected()) {
+				day=30;
+			}
+			else {
+				JOptionPane.showMessageDialog(null,"您未勾选时间","错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			xianshi();
+			A=new java.sql.Timestamp(A.getTime()+30*86400000L);
 			JOptionPane.showMessageDialog(null,String.valueOf(A));
 			try {
 				ttcpUtil.userManager.loginuser(Beanuser.currentLoginUser.getUser_id(), Beanuser.currentLoginUser.getPassword());
@@ -109,11 +120,31 @@ public class frmuservip extends JFrame implements ActionListener {
 			Connection conn=null;
 			try {
 				conn=DBUtil.getConnection();
-				String sql="update user_information_table set vip_deadline=? where vip=1";
+				String sql="update user_information_table set vip_deadline=? ,vip=1";
 				java.sql.PreparedStatement pst =conn.prepareStatement(sql);
-				pst=conn.prepareStatement(sql);
 				pst.setTimestamp(1, A);
-			
+				pst.execute();
+				pst.close();
+				
+				sql ="select max(user_youhui_id) from youhui_information_table";
+				int user_youhui_id=1;
+				pst=conn.prepareStatement(sql);
+				java.sql.ResultSet rs = pst.executeQuery();
+				while(rs.next()) {
+					user_youhui_id= rs.getInt(1)+1;
+				}
+				rs.close();
+				pst.close();
+				//System.out.print(user_youhui_id);
+				
+				sql="insert into youhui_information_table(user_youhui_id,user_id,youhui_id,shangjia_id,youhui,number,start_time,deadline) values(?,?,0,0,6.6,4,?,?)";
+				pst=conn.prepareStatement(sql);
+				pst.setInt(1, user_youhui_id);
+				pst.setString(2, Beanuser.currentLoginUser.getUser_id());
+				Timestamp B = new java.sql.Timestamp(System.currentTimeMillis());
+				Timestamp C = new java.sql.Timestamp(System.currentTimeMillis()+30*86400000L);
+				pst.setTimestamp(3, B);
+				pst.setTimestamp(4, C);
 				pst.execute();
 				pst.close();
 			} catch (SQLException e2) {

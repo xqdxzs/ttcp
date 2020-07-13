@@ -29,6 +29,10 @@ public class Frmadd_delete_youhui extends JFrame implements ActionListener {
 	private final JLabel label = new JLabel("优惠券序号：");
 	private  JTextField textField = new JTextField();
 	private final JLabel label_1 = new JLabel("————————————————");
+	private final JLabel label_2 = new JLabel("集单要求数：");
+	private final JTextField textField_3 = new JTextField();
+	private final JLabel label_3 = new JLabel("优惠券时间（天）:");
+	private final JTextField textField_4 = new JTextField();
 
 	/**
 	 * Launch the application.
@@ -38,10 +42,14 @@ public class Frmadd_delete_youhui extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Frmadd_delete_youhui() {
-		textField.setBounds(125, 211, 86, 24);
+		textField_4.setBounds(188, 160, 86, 24);
+		textField_4.setColumns(10);
+		textField_3.setBounds(188, 123, 86, 24);
+		textField_3.setColumns(10);
+		textField.setBounds(152, 282, 86, 24);
 		textField.setColumns(10);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 296, 375);
+		setBounds(100, 100, 315, 433);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -51,7 +59,7 @@ public class Frmadd_delete_youhui extends JFrame implements ActionListener {
 		lblNewLabel.setBounds(14, 41, 97, 18);
 		contentPane.add(lblNewLabel);
 
-		textField_1.setBounds(125, 38, 86, 24);
+		textField_1.setBounds(188, 38, 86, 24);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -59,29 +67,39 @@ public class Frmadd_delete_youhui extends JFrame implements ActionListener {
 		lblNewLabel_1.setBounds(14, 89, 97, 18);
 		contentPane.add(lblNewLabel_1);
 
-		textField_2.setBounds(125, 86, 86, 24);
+		textField_2.setBounds(188, 86, 86, 24);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 
-		button.setBounds(14, 140, 97, 35);
+		button.setBounds(14, 206, 97, 35);
 		contentPane.add(button);
 		button.addActionListener(this);
 
-		button_1.setBounds(137, 140, 112, 35);
+		button_1.setBounds(152, 206, 112, 35);
 		contentPane.add(button_1);
 		
-		btnNewButton.setBounds(37, 257, 141, 35);
+		btnNewButton.setBounds(76, 327, 141, 35);
 		btnNewButton.addActionListener(this);
 		contentPane.add(btnNewButton);
 		
-		label.setBounds(14, 214, 97, 18);
+		label.setBounds(14, 285, 97, 18);
 		
 		contentPane.add(label);
 		
 		contentPane.add(textField);
-		label_1.setBounds(14, 183, 250, 18);
+		label_1.setBounds(14, 254, 250, 18);
 		
 		contentPane.add(label_1);
+		label_2.setBounds(14, 126, 112, 18);
+		
+		contentPane.add(label_2);
+		
+		contentPane.add(textField_3);
+		label_3.setBounds(14, 163, 178, 18);
+		
+		contentPane.add(label_3);
+		
+		contentPane.add(textField_4);
 		button_1.addActionListener(this);
 	}
 
@@ -90,7 +108,7 @@ public class Frmadd_delete_youhui extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if(arg0.getSource() == this.button) {
 			try {
-				ttcpUtil.adminshangjiaguanli.addyouhui(Integer.valueOf(this.textField_1.getText()),Integer.valueOf(this.textField_2.getText()) );
+				ttcpUtil.adminshangjiaguanli.addyouhui(Integer.valueOf(this.textField_1.getText()),Integer.valueOf(this.textField_2.getText()),Integer.valueOf(this.textField_3.getText()) ,Integer.valueOf(this.textField_4.getText()));
 			} catch (NumberFormatException | BaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
