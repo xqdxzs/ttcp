@@ -46,7 +46,7 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 	private JMenuBar menubar=new JMenuBar(); ;
     private JMenu menu_plan=new JMenu("商家管理");
     private JMenu menu_step=new JMenu("优惠管理");   
-    private JMenu menu_static=new JMenu("骑手管理");    
+    private JMenu menu_static=new JMenu("骑手订单管理");    
     private JMenu menu_more=new JMenu("更多");
     
     private JMenuItem  menuItem_AddPlan=new JMenuItem("新建商家");
@@ -71,6 +71,7 @@ public class FrmMainadmin extends JFrame implements ActionListener {
     private JMenuItem  menuItem_static1=new JMenuItem("添加骑手");
     private JMenuItem menuItem_static2 = new JMenuItem("删改骑手");
     private JMenuItem menuItem_static3 = new JMenuItem("查看骑手信息");
+    private JMenuItem menuItem_static4 = new JMenuItem("接单");
     
     private JMenuItem  menuItem_modifyPwd=new JMenuItem("管理员密码修改");
     private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
@@ -206,6 +207,7 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 	    this.menu_static.add(this.menuItem_static1); this.menuItem_static1.addActionListener(this);
 	    this.menu_static.add(this.menuItem_static2); this.menuItem_static2.addActionListener(this);
 	    this.menu_static.add(this.menuItem_static3); this.menuItem_static3.addActionListener(this);
+	    this.menu_static.add(this.menuItem_static4); this.menuItem_static4.addActionListener(this);
 	    
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyF5); this.menuItem_modifyF5.addActionListener(this);
@@ -334,6 +336,10 @@ public class FrmMainadmin extends JFrame implements ActionListener {
 		if (e.getSource() == this.menuItem_static3) {
 			FrmChakan_rider list_rider = new FrmChakan_rider();
 			list_rider.setVisible(true);
+		}
+		if (e.getSource() == this.menuItem_static4) {//接单
+			Frmrider_jiedan rFrmrider_jiedan = new Frmrider_jiedan();
+			rFrmrider_jiedan.setVisible(true);
 		}
 		if (e.getSource() == this.menuItem_addyouhui) {
 			Frmadd_delete_youhui youhui = new Frmadd_delete_youhui();

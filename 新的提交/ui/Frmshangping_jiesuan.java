@@ -1,6 +1,7 @@
 package cn.edu.zucc.ttcp.ui;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -200,17 +201,8 @@ public class Frmshangping_jiesuan extends JFrame implements ActionListener {
 		this.getContentPane().add(scrollPane_2);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource() == this.btnNewButton) {
-			youhui();
-			Frmxiadan xiadan =new Frmxiadan(youhui,sum-youhui,curyouhui);
-			//System.out.print(curyouhui.getUser_youhui_id());
-			xiadan.setVisible(true);
-			youhui=0;
-		}
-	}
+	
+	
 	public float sum() {
 			float sum=0;
 			Connection conn=null;
@@ -254,19 +246,39 @@ public class Frmshangping_jiesuan extends JFrame implements ActionListener {
 		}
 		return number;
 }
+	
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == this.btnNewButton) {
+			youhui();
+			Frmxiadan xiadan =new Frmxiadan(youhui,sum,curyouhui,curmanjian,id);
+			
+			xiadan.setVisible(true);
+			youhui=0;
+		}
+		
+	}
 	public float youhui() {
 		
 		Connection conn=null;
-		if (curyouhui==null ) {
-			if (curmanjian.getManjian_amount()<sum) {
-				youhui=youhui+curmanjian.getYouhui_amount();
-			}
-			else {
-				JOptionPane.showMessageDialog(null,"不满足满减要求", "错误",JOptionPane.ERROR_MESSAGE);
-
-			}
-			return youhui;
+		if (curmanjian==null & curyouhui==null) {
+			return 0;
 		}
+		if (curyouhui==null ) {
+			if(curmanjian!=null) {
+				if (curmanjian.getManjian_amount()<sum) {
+					youhui=youhui+curmanjian.getYouhui_amount();
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"不满足满减要求", "错误",JOptionPane.ERROR_MESSAGE);
+
+				}
+			}			
+			
+			return youhui;
+			
+		}
+		
 		if (curmanjian==null) {
 			Timestamp a = new java.sql.Timestamp(System.currentTimeMillis());
 			Timestamp b = new java.sql.Timestamp(curyouhui.getDeadline().getTime());
@@ -279,9 +291,7 @@ public class Frmshangping_jiesuan extends JFrame implements ActionListener {
 			}
 			return youhui;
 		}
-		if (curmanjian==null & curyouhui==null) {
-			return 0;
-		}
+		
 		Timestamp a = new java.sql.Timestamp(System.currentTimeMillis());
 		Timestamp b = new java.sql.Timestamp(curyouhui.getDeadline().getTime());
 		if(a.before(a)) {
@@ -321,5 +331,4 @@ public class Frmshangping_jiesuan extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
 }

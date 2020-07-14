@@ -11,6 +11,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -26,11 +29,14 @@ import javax.swing.table.DefaultTableModel;
 
 import cn.edu.zucc.ttcp.ttcpUtil;
 import cn.edu.zucc.ttcp.model.Beangouwuche;
+import cn.edu.zucc.ttcp.model.Beanmanjian;
 import cn.edu.zucc.ttcp.model.Beanshangjia_xingxi;
 import cn.edu.zucc.ttcp.model.Beanshangping_leibie;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
 import cn.edu.zucc.ttcp.model.Beanuser;
 import cn.edu.zucc.ttcp.util.BaseException;
+import cn.edu.zucc.ttcp.util.DBUtil;
+import cn.edu.zucc.ttcp.util.DbException;
 import javafx.application.Application;
 
 
@@ -56,8 +62,9 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem  menuItem_modifyvip=new JMenuItem("充值vip");
     private JMenuItem  menuItem_modifyF5=new JMenuItem("刷新");
     
-    private JMenuItem  menuItem_static1=new JMenuItem("领取优惠券");
-    private JMenuItem  menuItem_static2=new JMenuItem("查看优惠券");
+    private JMenuItem  menuItem_static1= new JMenuItem("领取优惠券");
+    private JMenuItem  menuItem_static2= new JMenuItem("查看优惠券");
+    private JMenuItem  menuItem_static3= new JMenuItem("查看订单详情");
 
 	private FrmLogin dlgLogin=null;
 	private JPanel statusBar = new JPanel();
@@ -80,7 +87,7 @@ public class FrmMain extends JFrame implements ActionListener {
 	private Beanshangjia_xingxi curshangjia=null;
 	private Beanshangping_leibie curleibie=null;
 	private Beanshangping_xiangxi curshangping=null;
-	
+	private Beangouwuche curgouwuche=null;
 	private Object tblshangjiaData[][];
 	DefaultTableModel tabshangjiaModel=new DefaultTableModel();
 	private JTable dataTableshangjia=new JTable(tabshangjiaModel);
@@ -99,6 +106,7 @@ public class FrmMain extends JFrame implements ActionListener {
 	List<Beanshangjia_xingxi> allshangjia=null;
 	List<Beanshangping_leibie> leibie=null;
 	List<Beanshangping_xiangxi> shangping =null;
+	
 	List<Beangouwuche> gouwuche = null;
 	private Component dataTableStep;
 	
@@ -202,6 +210,7 @@ public class FrmMain extends JFrame implements ActionListener {
 	    
 	    this.menu_static.add(this.menuItem_static1); this.menuItem_static1.addActionListener(this);
 	    this.menu_static.add(this.menuItem_static2); this.menuItem_static2.addActionListener(this);
+	    this.menu_static.add(this.menuItem_static3); this.menuItem_static3.addActionListener(this);
 	    
 	    this.menu_more.add(this.menuItem_modifyPwd); this.menuItem_modifyPwd.addActionListener(this);
 	    this.menu_more.add(this.menuItem_modifyvip); this.menuItem_modifyvip.addActionListener(this);
@@ -260,7 +269,16 @@ public class FrmMain extends JFrame implements ActionListener {
 	    });
 	    
 	    this.getContentPane().add(new JScrollPane(this.dataTablegouwuche), BorderLayout.SOUTH);//购物车
-	    
+	    this.dataTablegouwuche.addMouseListener(new MouseAdapter (){
+	    public void mouseClicked(MouseEvent e) {
+			int i=FrmMain.this.dataTablegouwuche.getSelectedRow();
+			if(i<0) {
+				return;
+			}
+			curgouwuche=gouwuche.get(i);
+		}
+		
+    });
 	    
 	    //状态栏
 	    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -343,8 +361,30 @@ public class FrmMain extends JFrame implements ActionListener {
 			Frmchakan_user_youhui list_youhui = new Frmchakan_user_youhui();
 			list_youhui.setVisible(true);
 		}
-
-		
+		if (e.getSource() == this.menuItem_static3) {//查看订单详情
+			Frmuser_chakan_order list_order = new Frmuser_chakan_order();
+			list_order.setVisible(true);
+		}
+		if(e.getSource()==this.menuItem_DeletePlan) {//购物车商品删除
+			Connection conn=null;
+			try {
+				if (curgouwuche==null) {
+					JOptionPane.showMessageDialog(null,"你未选中要删除的商品", "错误",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				conn=DBUtil.getConnection();
+				String sql = "delete  from gouwuche_table where shangping_id=? and number=?";
+				java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+				//pst.setString(1,Beanuser.currentLoginUser.get_id());
+				pst.setInt(1, curgouwuche.getShangping_id());
+				pst.setInt(2, curgouwuche.getNumber());
+				pst.execute();
+				pst.close();
+				JOptionPane.showMessageDialog(null,"删除成功");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 	private void addshangping(int shangping_id, String shangping_name, float price, int loadnumber) {
 		// TODO Auto-generated method stub

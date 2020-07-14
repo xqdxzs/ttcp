@@ -45,7 +45,7 @@ public class Frmaddgouwuche extends JFrame implements ActionListener {
 //					e.printStackTrace();
 //				}
 //			}
-//		});
+//		});1
 //	}
 
 
