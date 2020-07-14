@@ -3,6 +3,26 @@ package cn.edu.zucc.ttcp.model;
 import java.sql.Timestamp;
 
 public class Beanshangping_order {
+	public static final String[] tableTitles={"订单编号","地址编号","原价","实付","下单时间","订单状态"};
+	public static final String[] tableTitles1={"订单编号","地址编号","原价","实付","下单时间","要求送达时间"};
+	public String getCell(int col){
+		if(col==0) return String.valueOf(this.order_id);
+		else if(col==1) return String.valueOf(address_id);
+		else if(col==2) return String.valueOf(yuanjia);
+		else if(col==3) return String.valueOf(shijijiage);
+		else if(col==4) return String.valueOf(order_time);
+		else if(col==5) return this.order_zhuangtai;
+		else return "";
+	}
+	public String getCell1(int col){
+		if(col==0) return String.valueOf(this.order_id);
+		else if(col==1) return String.valueOf(address_id);
+		else if(col==2) return String.valueOf(yuanjia);
+		else if(col==3) return String.valueOf(shijijiage);
+		else if(col==4) return String.valueOf(order_time);
+		else if(col==5) return String.valueOf(required_time);
+		else return "";
+	}
 	private int order_id;
 	private int address_id;
 	private int manjian_id;

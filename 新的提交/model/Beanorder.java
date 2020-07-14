@@ -4,14 +4,20 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Beanorder {
+	public static final String[] tableTitles={"订单编号","商品编号","数量","单价","合计"};
+	public String getCell(int col){
+		if(col==0) return String.valueOf(this.order_id);
+		else if(col==1) return String.valueOf(shangping_id);
+		else if(col==2) return String.valueOf(number);
+		else if(col==3) return String.valueOf(price);
+		else if(col==4) return String.valueOf(number*price);
+		else return "";
+	}
 	private int order_id;
 	private int shangping_id;
 	private int number;
 	private float price;
-	private float youhui;
-	private Timestamp time;
-	private String user_pingjia;
-	private float sigle_revenue;
+
 	public int getOrder_id() {
 		return order_id;
 	}
@@ -36,29 +42,6 @@ public class Beanorder {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public float getYouhui() {
-		return youhui;
-	}
-	public void setYouhui(float youhui) {
-		this.youhui = youhui;
-	}
-	public Timestamp getTime() {
-		return time;
-	}
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
-	public String getUser_pingjia() {
-		return user_pingjia;
-	}
-	public void setUser_pingjia(String user_pingjia) {
-		this.user_pingjia = user_pingjia;
-	}
-	public float getSigle_revenue() {
-		return sigle_revenue;
-	}
-	public void setSigle_revenue(float sigle_revenue) {
-		this.sigle_revenue = sigle_revenue;
-	}
+	
 	
 }
