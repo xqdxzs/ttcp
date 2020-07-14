@@ -7,6 +7,7 @@ import cn.edu.zucc.ttcp.model.Beanmanjian;
 import cn.edu.zucc.ttcp.model.Beanrider;
 import cn.edu.zucc.ttcp.model.Beanshangjia_xingxi;
 import cn.edu.zucc.ttcp.model.Beanshangping_leibie;
+import cn.edu.zucc.ttcp.model.Beanshangping_order;
 import cn.edu.zucc.ttcp.model.Beanshangping_xiangxi;
 import cn.edu.zucc.ttcp.model.Beanyouhui1;
 import cn.edu.zucc.ttcp.model.Beanyouhui;
@@ -54,7 +55,7 @@ public interface  Adminshangjia {
 	public List<Beanyouhui1 > loadyouhui1( )throws BaseException;
 	
 	public List<Beanyouhui > loadyouhui(Beanyouhui1 youhui1)throws BaseException;
-	
-	
+// 骑手接单
+	public List<Beanshangping_order> loadorder_peisong() throws BaseException;
 }
 
